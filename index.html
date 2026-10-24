@@ -1,0 +1,312 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bioquímica del Agua - Odonto Joe</title>
+  <style>
+    :root {
+      --primary: #0077b6;
+      --secondary: #00b4d8;
+      --accent: #ff9f1c;
+      --success: #2ec4b6;
+      --danger: #e71d36;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #212529;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { margin: 0; background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+    header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    header h1 { margin: 0 0 5px 0; font-size: 1.4rem; }
+    header p { margin: 0; font-size: 0.9rem; opacity: 0.95; }
+    .tutor-badge { display: inline-flex; align-items: center; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 5px 12px; margin-top: 8px; font-size: 0.8rem; }
+    
+    .nav-tabs { display: flex; overflow-x: auto; background: white; padding: 8px; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    .nav-tab { flex: 1; min-width: 90px; text-align: center; padding: 10px 8px; font-size: 0.85rem; font-weight: 600; border: none; background: #e9ecef; border-radius: 12px; cursor: pointer; color: #495057; }
+    .nav-tab.active { background: var(--primary); color: white; }
+    
+    .container { padding: 16px; max-width: 650px; margin: auto; }
+    .card { background: var(--card); border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #edf2f7; }
+    .card h2 { margin-top: 0; font-size: 1.15rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    
+    .bubble-coach { background: #e0f2fe; border-left: 4px solid var(--secondary); padding: 12px; border-radius: 8px; margin: 12px 0; font-size: 0.88rem; font-style: italic; }
+    
+    /* Interactive Sliders & Inputs */
+    .calc-row { margin-bottom: 12px; }
+    .calc-row label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+    .calc-row input[type=range] { width: 100%; accent-color: var(--primary); }
+    .badge-val { display: inline-block; background: #e2e8f0; padding: 2px 8px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; }
+    .result-box { background: #eff6ff; border: 2px dashed var(--primary); border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px; }
+    .result-val { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    
+    /* Quiz Buttons */
+    .quiz-opt { width: 100%; text-align: left; padding: 12px 14px; margin: 6px 0; border: 1.5px solid #cbd5e1; border-radius: 10px; background: white; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    .quiz-opt:active { transform: scale(0.98); }
+    .quiz-opt.correct { background: #d1fae5; border-color: var(--success); color: #065f46; font-weight: bold; }
+    .quiz-opt.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+    .feedback-box { display: none; margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 0.85rem; }
+    
+    /* Game Element */
+    .tooth-container { text-align: center; padding: 20px 0; }
+    .tooth-icon { font-size: 4.5rem; transition: transform 0.3s; display: inline-block; }
+    .ph-meter { height: 18px; width: 100%; border-radius: 10px; background: linear-gradient(to right, #e71d36, #ff9f1c, #2ec4b6, #0077b6); margin: 10px 0; position: relative; }
+    .ph-needle { position: absolute; top: -6px; width: 6px; height: 30px; background: black; border-radius: 3px; transform: translateX(-50%); transition: left 0.3s ease; }
+    .btn-action { background: var(--secondary); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; margin: 4px; cursor: pointer; }
+    .btn-action:active { background: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Bioquímica de Odontología: Agua</h1>
+    <p>Guía interactiva personalizada para Joe</p>
+    <div class="tutor-badge">👨‍🏫 Tutor Virtual: Prof. Jorge Ñañez</div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('tab-prop')">1. Físicas</button>
+    <button class="nav-tab" onclick="showTab('tab-osm')">2. Ósmosis</button>
+    <button class="nav-tab" onclick="showTab('tab-hh')">3. Henderson</button>
+    <button class="nav-tab" onclick="showTab('tab-game')">4. MiniJuego</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- TAB 1: PROPIEDADES FISICAS -->
+    <div id="tab-prop" class="tab-content">
+      <div class="card">
+        <h2>💧 Cohesión, Adhesión y Tensión</h2>
+        <div class="bubble-coach">
+          «¡Hola Joe! Recuerda: el agua no moja las ceras ni las siliconas pesadas porque su cohesión vence a la adhesión. Pero moja el vidrio y la dentina grabada porque la adhesión gana.»
+        </div>
+        <p style="font-size: 0.9rem;"><b>Valores clave que pregunta el Prof. Sánchez:</b></p>
+        <ul style="font-size: 0.88rem; line-height: 1.5;">
+          <li><b>Viscosidad a 20°C:</b> 0.69 cP</li>
+          <li><b>Viscosidad de Saliva:</b> 1.05 - 1.50 cP (¡por las mucinas!)</li>
+          <li><b>Viscosidad de Sangre:</b> 3.50 - 5.50 cP</li>
+          <li><b>Calor de vaporización:</b> 540 cal/g</li>
+          <li><b>Constante Dieléctrica:</b> ~78 a temp. corporal</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>⚡ Pregunta Rápida de Jorge</h2>
+        <p style="font-size: 0.9rem;">En endodoncia, ¿por qué es indispensable que el irrigante penetre los conductos estrechos?</p>
+        <button class="quiz-opt" onclick="checkQ1(this, false)">A) Por alta viscosidad de la sangre</button>
+        <button class="quiz-opt" onclick="checkQ1(this, true)">B) Por capilaridad, requiriendo baja tensión superficial</button>
+        <button class="quiz-opt" onclick="checkQ1(this, false)">C) Porque el punto de ebullición sube a 120°C</button>
+        <div id="feed-q1" class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ÓSMOSIS -->
+    <div id="tab-osm" class="tab-content" style="display:none;">
+      <div class="card">
+        <h2>🧪 Simulador de Glóbulos Rojos</h2>
+        <div class="bubble-coach">
+          «Joe, la osmolaridad fisiológica humana es de <b>280 a 295 mOsm/L</b>. Mira lo que pasa cuando sumerges un eritrocito en soluciones de diferente osmolaridad:»
+        </div>
+        <div style="text-align: center; padding: 15px;">
+          <div id="cell-visual" style="display:inline-block; width: 90px; height: 90px; background: #e71d36; border-radius: 50%; transition: all 0.4s; line-height: 90px; color: white; font-weight: bold; font-size: 0.75rem;">Normal</div>
+          <p id="cell-desc" style="font-size: 0.88rem; margin-top: 10px; font-weight: 600;">Medio Isotónico (~290 mOsm/L)</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-action" style="flex:1;" onclick="setOsm(100)">Hipotónico (Agua destilada)</button>
+          <button class="btn-action" style="flex:1;" onclick="setOsm(290)">Isotónico (Suero 0.9%)</button>
+          <button class="btn-action" style="flex:1;" onclick="setOsm(600)">Hipertónico (Salmuera)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: HENDERSON-HASSELBALCH -->
+    <div id="tab-hh" class="tab-content" style="display:none;">
+      <div class="card">
+        <h2>📐 Calculadora de Henderson-Hasselbalch</h2>
+        <div class="bubble-coach">
+          «Fórmula clave de la diapositiva 57: <b>pH = pKa + log([A⁻]/[HA])</b>. Modifica los controles y observa cuándo se alcanza la <b>máxima eficacia amortiguadora</b>.»
+        </div>
+        
+        <div class="calc-row">
+          <label>pKa del Ácido Débil: <span id="lbl-pka" class="badge-val">4.76</span> (Ácido Acético)</label>
+          <input type="range" id="rng-pka" min="2" max="10" step="0.01" value="4.76" oninput="calcHH()">
+        </div>
+
+        <div class="calc-row">
+          <label>Base Conjugada [A⁻] (Acetato / Bicarbonato): <span id="lbl-a" class="badge-val">0.10 M</span></label>
+          <input type="range" id="rng-a" min="0.01" max="1" step="0.01" value="0.10" oninput="calcHH()">
+        </div>
+
+        <div class="calc-row">
+          <label>Ácido Débil [HA] (Ácido Acético / Carbónico): <span id="lbl-ha" class="badge-val">0.10 M</span></label>
+          <input type="range" id="rng-ha" min="0.01" max="1" step="0.01" value="0.10" oninput="calcHH()">
+        </div>
+
+        <div class="result-box">
+          <div>pH Resultante de la Solución:</div>
+          <div class="result-val" id="res-ph">4.76</div>
+          <p id="res-note" style="margin: 5px 0 0; font-size: 0.85rem; color: #475569;">¡Máxima capacidad buffer! [A⁻] = [HA], log(1) = 0.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: MINIJUEGO SALVA EL DIENTE -->
+    <div id="tab-game" class="tab-content" style="display:none;">
+      <div class="card">
+        <h2>🦷 Desafío: ¡Salva el Diente de la Caries!</h2>
+        <div class="bubble-coach">
+          «¡Alerta, Joe! Tu paciente tomó refresco azucarado y las bacterias fermentaron ácido láctico. El esmalte se desmineraliza si el pH cae por debajo de <b>5.5 (pH crítico)</b>. ¡Usa la saliva y los tampones para salvarlo!»
+        </div>
+
+        <div class="tooth-container">
+          <div class="tooth-icon" id="tooth">🦷</div>
+          <div style="font-size: 1.1rem; font-weight: bold; margin-top: 5px;" id="game-status">Estado: Esmalte Saludable</div>
+          <div class="ph-meter">
+            <div class="ph-needle" id="needle" style="left: 50%;"></div>
+          </div>
+          <div style="font-size: 0.85rem; display: flex; justify-content: space-between;">
+            <span>Ácido (pH 2)</span>
+            <span style="color: red; font-weight: bold;">5.5 Crítico</span>
+            <span>Neutro (pH 7)</span>
+            <span>Básico (pH 10)</span>
+          </div>
+          <div style="font-size: 1.3rem; font-weight: 800; margin: 10px 0; color: var(--primary);" id="cur-ph-disp">pH actual: 7.0</div>
+        </div>
+
+        <div style="text-align: center;">
+          <button class="btn-action" style="background: #e71d36;" onclick="applyAttack()">🥤 Ataque Ácido bacteriano</button>
+          <button class="btn-action" style="background: var(--success);" onclick="applySaliva()">💧 Estimular Saliva (Bicarbonato)</button>
+          <button class="btn-action" style="background: var(--accent);" onclick="resetGame()">🔄 Reiniciar Caso</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active');
+    }
+
+    function checkQ1(btn, isCorrect) {
+      const feed = document.getElementById('feed-q1');
+      feed.style.display = 'block';
+      if(isCorrect) {
+        btn.classList.add('correct');
+        feed.innerHTML = "✅ <b>¡Excelente, Joe!</b> El irrigante penetra por capilaridad en los túbulos gracias a una baja tensión superficial que permite humectar la dentina.";
+        feed.style.background = "#d1fae5";
+        feed.style.color = "#065f46";
+      } else {
+        btn.classList.add('wrong');
+        feed.innerHTML = "❌ <b>Cerca, pero no.</b> Revisa la capilaridad y cómo los irrigantes como el NaClO dependen de una baja tensión superficial para mojar el interior radicular.";
+        feed.style.background = "#fee2e2";
+        feed.style.color = "#991b1b";
+      }
+    }
+
+    function setOsm(val) {
+      const visual = document.getElementById('cell-visual');
+      const desc = document.getElementById('cell-desc');
+      if(val < 200) {
+        visual.style.transform = "scale(1.4)";
+        visual.style.borderRadius = "50%";
+        visual.innerText = "¡Lisis!";
+        desc.innerText = "Hipotónico: El agua entra a la célula hasta estallarla.";
+        desc.style.color = "#e71d36";
+      } else if(val > 400) {
+        visual.style.transform = "scale(0.7)";
+        visual.style.borderRadius = "25%";
+        visual.innerText = "Crenada";
+        desc.innerText = "Hipertónico: El agua se escapa de la célula y se arruga.";
+        desc.style.color = "#ff9f1c";
+      } else {
+        visual.style.transform = "scale(1.0)";
+        visual.style.borderRadius = "50%";
+        visual.innerText = "Normal";
+        desc.innerText = "Isotónico (280-295 mOsm/L): Flujo neto de agua en equilibrio.";
+        desc.style.color = "#2ec4b6";
+      }
+    }
+
+    function calcHH() {
+      const pka = parseFloat(document.getElementById('rng-pka').value);
+      const a = parseFloat(document.getElementById('rng-a').value);
+      const ha = parseFloat(document.getElementById('rng-ha').value);
+
+      document.getElementById('lbl-pka').innerText = pka.toFixed(2);
+      document.getElementById('lbl-a').innerText = a.toFixed(2) + " M";
+      document.getElementById('lbl-ha').innerText = ha.toFixed(2) + " M";
+
+      const ph = pka + Math.log10(a / ha);
+      document.getElementById('res-ph').innerText = ph.toFixed(2);
+
+      const note = document.getElementById('res-note');
+      if (Math.abs(a - ha) < 0.001) {
+        note.innerText = "⭐ ¡Máxima Eficacia! [A⁻] = [HA] ➔ pH = pKa.";
+        note.style.color = "var(--primary)";
+        note.style.fontWeight = "bold";
+      } else if (ph < pka) {
+        note.innerText = "Predomina la forma ácida [HA].";
+        note.style.color = "#64748b";
+        note.style.fontWeight = "normal";
+      } else {
+        note.innerText = "Predomina la base conjugada [A⁻].";
+        note.style.color = "#64748b";
+        note.style.fontWeight = "normal";
+      }
+    }
+
+    // MiniGame Logic
+    let currentPH = 7.0;
+    function updateGameUI() {
+      document.getElementById('cur-ph-disp').innerText = "pH actual: " + currentPH.toFixed(1);
+      // Map 2.0 -> 0%, 10.0 -> 100%
+      let pct = ((currentPH - 2.0) / 8.0) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      document.getElementById('needle').style.left = pct + "%";
+
+      const tooth = document.getElementById('tooth');
+      const status = document.getElementById('game-status');
+
+      if (currentPH < 5.5) {
+        tooth.style.transform = "rotate(15deg) scale(0.9)";
+        tooth.innerText = "💔";
+        status.innerText = "¡DESMINERALIZACIÓN ACTIVA! (pH < 5.5)";
+        status.style.color = "#e71d36";
+      } else if (currentPH >= 5.5 && currentPH < 6.5) {
+        tooth.style.transform = "rotate(0deg) scale(1)";
+        tooth.innerText = "🦷";
+        status.innerText = "Zona de Riesgo (Cuidado)";
+        status.style.color = "#ff9f1c";
+      } else {
+        tooth.style.transform = "scale(1.05)";
+        tooth.innerText = "😁";
+        status.innerText = "Esmalte Seguro y Protegido";
+        status.style.color = "#2ec4b6";
+      }
+    }
+
+    function applyAttack() {
+      currentPH = Math.max(3.2, currentPH - 1.4);
+      updateGameUI();
+    }
+
+    function applySaliva() {
+      currentPH = Math.min(7.4, currentPH + 0.9);
+      updateGameUI();
+    }
+
+    function resetGame() {
+      currentPH = 7.0;
+      updateGameUI();
+    }
+
+    // Init
+    calcHH();
+    updateGameUI();
+  </script>
+</body>
+</html>
